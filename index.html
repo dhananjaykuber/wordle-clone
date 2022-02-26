@@ -5,6 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wordle Clone</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -17,8 +24,25 @@
 
       <div class="key-container"></div>
 
-      <div class="dialog">
-        <!-- <p></p> -->
+      <div class="dialog"></div>
+
+      <div class="modal">
+        <h2 id="header">Game Over!</h2>
+        <div class="modal-container">
+          <i
+            class="fa-solid fa-xmark"
+            id="close"
+            onclick="hanldeCloseModal()"
+          ></i>
+          <button onclick="hanldeCopyToClipboard()" id="copy">
+            <p>Copy to clipboard</p>
+            <i class="fa-solid fa-copy"></i>
+          </button>
+          <button id="share">
+            <p>Share</p>
+            <i class="fa-solid fa-share-nodes"></i>
+          </button>
+        </div>
       </div>
 
       <script src="app.js"></script>

@@ -55,6 +55,15 @@ const guessRows = [
   ['', '', '', '', '', ''],
 ];
 
+const icons = [
+  ['⬜', '⬜', '⬜', '⬜', '⬜', '⬜'],
+  ['⬜', '⬜', '⬜', '⬜', '⬜', '⬜'],
+  ['⬜', '⬜', '⬜', '⬜', '⬜', '⬜'],
+  ['⬜', '⬜', '⬜', '⬜', '⬜', '⬜'],
+  ['⬜', '⬜', '⬜', '⬜', '⬜', '⬜'],
+  ['⬜', '⬜', '⬜', '⬜', '⬜', '⬜'],
+];
+
 let currentRow = 0;
 let currentTile = 0;
 let isGameOver = false;
@@ -135,6 +144,26 @@ const showDialog = (message, color) => {
   }, 2500);
 };
 
+const showModal = (message, color) => {
+  const modal = document.querySelector('.modal');
+  modal.classList.add(color);
+  modal.classList.add('show');
+
+  const header = document.querySelector('#header');
+  header.textContent = message;
+
+  if (message == 'Game over!') {
+    const header = document.querySelector('#header');
+    header.style.color = '#a31616';
+
+    const copy = document.querySelector('#copy');
+    copy.classList.add('warning-button');
+
+    const share = document.querySelector('#share');
+    share.classList.add('warning-button');
+  }
+};
+
 const checkRow = () => {
   const guess = guessRows[currentRow].join('');
 
@@ -152,15 +181,17 @@ const checkRow = () => {
           return;
         } else {
           flipTile();
+          addToIcons();
           if (wordle === guess) {
             isGameOver = true;
-            showDialog('You won!', 'success');
+            currentRow++;
+            showModal('You won!', 'success');
             document.querySelector('#ENTER').disabled = false;
             return;
           } else {
             if (currentRow >= 5) {
               isGameOver = true;
-              showDialog('Game over!', 'warning');
+              showModal('Game over!', 'warning');
               return;
             }
             if (currentRow <= 5) {
@@ -198,6 +229,22 @@ const flipTile = () => {
       }
     }, 500 * index);
   });
+  console.log(icons);
+};
+
+const addToIcons = () => {
+  const rowTiles = document.querySelector(`#guessRow-${currentRow}`).childNodes;
+  rowTiles.forEach((tile, index) => {
+    const dataLetter = tile.getAttribute('data');
+
+    if (dataLetter === wordle[index]) {
+      icons[currentRow][index] = '🟩';
+    } else if (wordle.includes(dataLetter)) {
+      icons[currentRow][index] = '🟨';
+    } else {
+      icons[currentRow][index] = '⬛';
+    }
+  });
 };
 
 document.addEventListener('keydown', (e) => {
@@ -209,3 +256,17 @@ document.addEventListener('keydown', (e) => {
     }
   }
 });
+
+const hanldeCloseModal = () => {
+  const modal = document.querySelector('.modal');
+  modal.classList.remove('show');
+};
+
+const hanldeCopyToClipboard = () => {
+  const modal = document.querySelector('.modal');
+
+  const message = icons.map((icon) => icon.join('\t')).join('\n');
+  console.log(message);
+
+  modal.classList.remove('show');
+};

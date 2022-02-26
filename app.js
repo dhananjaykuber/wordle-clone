@@ -4,7 +4,7 @@ const keyboard = document.querySelector('.key-container');
 let wordle;
 
 const getWordle = async () => {
-  await fetch('http://localhost:5000/word')
+  await fetch('https://wordle-clone-app.vercel.app/word')
     .then((response) => response.json())
     .then((json) => {
       console.log(json);
@@ -133,7 +133,7 @@ const checkRow = () => {
   if (currentTile > 5) {
     document.querySelector('#ENTER').disabled = true;
 
-    fetch(`http://localhost:5000/check/${guess}`)
+    fetch(`https://wordle-clone-app.vercel.app/check/${guess}`)
       .then((response) => response.json())
       .then((json) => {
         console.log(json);

@@ -4,10 +4,10 @@ const keyboard = document.querySelector('.key-container');
 let wordle;
 
 const getWordle = async () => {
-  await fetch('https://wordle-clone-app.vercel.app/word')
+  await fetch(`https://six-letter-wordle.herokuapp.com/wordle/api/v1/word`)
     .then((response) => response.json())
     .then((json) => {
-      console.log(json);
+      console.log(json.message);
       wordle = json.message.toUpperCase();
     })
     .catch((err) => console.log(err));
@@ -86,14 +86,11 @@ keys.forEach((key) => {
 
 const handleClick = (letter) => {
   if (!isGameOver) {
-    console.log(letter);
     if (letter === 'BACK') {
-      console.log('backspace');
       deleteLetter();
       return;
     }
     if (letter === 'ENTER') {
-      console.log('check row');
       checkRow();
       return;
     }
@@ -110,7 +107,6 @@ const addLetter = (letter) => {
     tile.setAttribute('data', letter);
     guessRows[currentRow][currentTile] = letter;
     currentTile++;
-    console.log(guessRows);
   }
 };
 
@@ -123,8 +119,20 @@ const deleteLetter = () => {
     tile.textContent = '';
     guessRows[currentRow][currentTile] = '';
     tile.setAttribute('data', '');
-    console.log(guessRows);
   }
+};
+
+const showDialog = (message, color) => {
+  const dialog = document.querySelector('.dialog');
+  dialog.classList.add(color);
+  const p = document.createElement('p');
+  p.textContent = message;
+  dialog.append(p);
+
+  setTimeout(() => {
+    dialog.classList.remove(color);
+    dialog.removeChild(p);
+  }, 2500);
 };
 
 const checkRow = () => {
@@ -133,26 +141,26 @@ const checkRow = () => {
   if (currentTile > 5) {
     document.querySelector('#ENTER').disabled = true;
 
-    fetch(`https://wordle-clone-app.vercel.app/check/${guess}`)
+    fetch(
+      `https://six-letter-wordle.herokuapp.com/wordle/api/v1/check/${guess}`
+    )
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
         if (json.message === "The word doesn't exists.") {
-          alert('word not in list');
+          showDialog('Word not in list', 'error');
           document.querySelector('#ENTER').disabled = false;
           return;
         } else {
           flipTile();
-          console.log(guess + ' ' + wordle);
           if (wordle === guess) {
             isGameOver = true;
-            alert('Won');
+            showDialog('You won!', 'success');
             document.querySelector('#ENTER').disabled = false;
             return;
           } else {
             if (currentRow >= 5) {
               isGameOver = true;
-              alert('Game over');
+              showDialog('Game over!', 'warning');
               return;
             }
             if (currentRow <= 5) {
@@ -191,3 +199,13 @@ const flipTile = () => {
     }, 500 * index);
   });
 };
+
+document.addEventListener('keydown', (e) => {
+  if (keys.includes(e.key.toUpperCase()) || e.key === 'Backspace') {
+    if (e.key === 'Backspace') {
+      handleClick('BACK');
+    } else {
+      handleClick(e.key.toUpperCase());
+    }
+  }
+});

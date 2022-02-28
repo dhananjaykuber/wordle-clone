@@ -20,6 +20,10 @@
         <h1>Worlde Clone</h1>
       </div>
 
+      <button class="share-stats" onclick="hanldeOpenModal()">
+        Share Stats &nbsp; <i class="fa-solid fa-share-nodes"></i>
+      </button>
+
       <div class="tile-container"></div>
 
       <div class="key-container"></div>
@@ -27,7 +31,7 @@
       <div class="dialog"></div>
 
       <div class="modal">
-        <h2 id="header">Game Over!</h2>
+        <h2 id="header"></h2>
         <div class="modal-container">
           <i
             class="fa-solid fa-xmark"
@@ -39,7 +43,7 @@
             <i class="fa-solid fa-copy"></i>
           </a>
           <a id="share" onclick="handleShare()" data-size="large">
-            <p>Share</p>
+            <p>Tweet</p>
             <i class="fa-brands fa-twitter"></i>
           </a>
         </div>

@@ -56,12 +56,12 @@ const guessRows = [
 ];
 
 const icons = [
-  ['⬜', '⬜', '⬜', '⬜', '⬜', '⬜'],
-  ['⬜', '⬜', '⬜', '⬜', '⬜', '⬜'],
-  ['⬜', '⬜', '⬜', '⬜', '⬜', '⬜'],
-  ['⬜', '⬜', '⬜', '⬜', '⬜', '⬜'],
-  ['⬜', '⬜', '⬜', '⬜', '⬜', '⬜'],
-  ['⬜', '⬜', '⬜', '⬜', '⬜', '⬜'],
+  ['', '', '', '', '', ''],
+  ['', '', '', '', '', ''],
+  ['', '', '', '', '', ''],
+  ['', '', '', '', '', ''],
+  ['', '', '', '', '', ''],
+  ['', '', '', '', '', ''],
 ];
 
 let currentRow = 0;
@@ -188,7 +188,9 @@ const checkRow = () => {
             isGameOver = true;
             currentRow++;
             showModal('You won!', 'success');
-
+            const shareButton = document.querySelector('.share-stats');
+            console.log(shareButton);
+            shareButton.style.display = 'block';
             document.querySelector('#ENTER').disabled = false;
             return;
           } else {
@@ -295,4 +297,9 @@ const handleShare = () => {
   );
 
   modal.classList.remove('show');
+};
+
+const hanldeOpenModal = () => {
+  const modal = document.querySelector('.modal');
+  modal.classList.add('show');
 };

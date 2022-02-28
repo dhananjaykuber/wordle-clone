@@ -67,6 +67,8 @@ const icons = [
 let currentRow = 0;
 let currentTile = 0;
 let isGameOver = false;
+let message = '';
+const date = new Date();
 
 guessRows.forEach((guessRow, guessRowIndex) => {
   const rowElement = document.createElement('div');
@@ -186,6 +188,7 @@ const checkRow = () => {
             isGameOver = true;
             currentRow++;
             showModal('You won!', 'success');
+
             document.querySelector('#ENTER').disabled = false;
             return;
           } else {
@@ -265,8 +268,34 @@ const hanldeCloseModal = () => {
 const hanldeCopyToClipboard = () => {
   const modal = document.querySelector('.modal');
 
-  const message = icons.map((icon) => icon.join('\t')).join('\n');
+  message = icons.map((icon) => icon.join('\t')).join('\n');
+  message = `Wordle Clone ${
+    date.getDate() > 9 ? date.getDate() : '0' + date.getDate()
+  }/${
+    date.getMonth() > 8 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)
+  }/${date.getFullYear()} \n\n${message} \n\nVisit: wordle-clone-app.vercel.app`;
   console.log(message);
+
+  navigator.clipboard.writeText(message);
+
+  modal.classList.remove('show');
+};
+
+const handleShare = () => {
+  const share = document.querySelector('#share');
+
+  message = icons.map((icon) => icon.join('\t')).join('%0A');
+  message = `Wordle Clone ${
+    date.getDate() > 9 ? date.getDate() : '0' + date.getDate()
+  }/${
+    date.getMonth() > 8 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)
+  }/${date.getFullYear()} %0A%0A${message} %0A%0AVisit: wordle-clone-app.vercel.app`;
+  console.log(message);
+
+  share.setAttribute(
+    'href',
+    `https://twitter.com/intent/tweet?text=${message}`
+  );
 
   modal.classList.remove('show');
 };

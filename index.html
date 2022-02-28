@@ -34,16 +34,22 @@
             id="close"
             onclick="hanldeCloseModal()"
           ></i>
-          <button onclick="hanldeCopyToClipboard()" id="copy">
+          <a onclick="hanldeCopyToClipboard()" id="copy">
             <p>Copy to clipboard</p>
             <i class="fa-solid fa-copy"></i>
-          </button>
-          <button id="share">
+          </a>
+          <a id="share" onclick="handleShare()" data-size="large">
             <p>Share</p>
-            <i class="fa-solid fa-share-nodes"></i>
-          </button>
+            <i class="fa-brands fa-twitter"></i>
+          </a>
         </div>
       </div>
+      <a
+        class="twitter-share-button"
+        href="https://twitter.com/intent/tweet?text=Hello%0Aworld"
+      >
+        Tweet</a
+      >
 
       <script src="app.js"></script>
     </div>

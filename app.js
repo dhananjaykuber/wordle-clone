@@ -232,7 +232,6 @@ const flipTile = () => {
       }
     }, 500 * index);
   });
-  console.log(icons);
 };
 
 const addToIcons = () => {
@@ -274,7 +273,6 @@ const hanldeCopyToClipboard = () => {
   }/${
     date.getMonth() > 8 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)
   }/${date.getFullYear()} \n\n${message} \n\nVisit: wordle-clone-app.vercel.app`;
-  console.log(message);
 
   navigator.clipboard.writeText(message);
 
@@ -290,7 +288,6 @@ const handleShare = () => {
   }/${
     date.getMonth() > 8 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)
   }/${date.getFullYear()} %0A%0A${message} %0A%0AVisit: wordle-clone-app.vercel.app`;
-  console.log(message);
 
   share.setAttribute(
     'href',
